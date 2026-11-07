@@ -13,14 +13,26 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::create(['nama' => 'Admin Kampus', 'email' => 'admin@temukampus.test',
-                               'password' => bcrypt('password'), 'role' => 'admin']);
+        // Aman dijalankan ulang: lewati bila data demo sudah ada
+        // (mis. pre-deploy command di server yang lupa dihapus).
+        if (User::where('email', 'admin@temukampus.test')->exists()) {
+            $this->command?->warn('Data demo sudah ada, seeder dilewati.');
+            return;
+        }
+
+        // Di server, isi environment variable SEED_PASSWORD agar akun demo
+        // tidak memakai password bawaan "password". getenv() dipakai (bukan env())
+        // karena env() bernilai null saat konfigurasi di-cache di production.
+        $hash = bcrypt(getenv('SEED_PASSWORD') ?: 'password');
+
+        $admin =User::create(['nama' => 'Admin Kampus', 'email' => 'admin@temukampus.test',
+                               'password' => $hash, 'role' => 'admin']);
         $petugas = User::create(['nama' => 'Pak Joko', 'nim_nip' => '198001012005', 'email' => 'petugas@temukampus.test',
-                                 'password' => bcrypt('password'), 'role' => 'petugas', 'no_hp' => '0811-1111-0001']);
+                                 'password' => $hash, 'role' => 'petugas', 'no_hp' => '0811-1111-0001']);
         $mhs = User::create(['nama' => 'Mahasiswa Demo', 'nim_nip' => '1301220001', 'email' => 'mahasiswa@temukampus.test',
-                             'password' => bcrypt('password'), 'role' => 'mahasiswa', 'no_hp' => '0812-2222-0001']);
+                             'password' => $hash, 'role' => 'mahasiswa', 'no_hp' => '0812-2222-0001']);
         $andi = User::create(['nama' => 'Andi Pratama', 'nim_nip' => '1301220045', 'email' => 'andi@temukampus.test',
-                              'password' => bcrypt('password'), 'role' => 'mahasiswa', 'no_hp' => '0812-3333-4410']);
+                              'password' => $hash, 'role' => 'mahasiswa', 'no_hp' => '0812-3333-4410']);
 
         $kategori = [];
         foreach (['Elektronik', 'Dokumen', 'Aksesoris', 'Pakaian', 'Lainnya'] as $k) {
