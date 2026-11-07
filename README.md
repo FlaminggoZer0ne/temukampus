@@ -528,7 +528,7 @@ Tata letak responsif lewat Bootstrap: sidebar menjadi menu geser di layar kecil.
 
 ## 14. Instalasi
 
-**Kebutuhan:** PHP ≥ 8.2 (ekstensi `pdo_mysql`, `mbstring`, `openssl`, `fileinfo`), Composer, MySQL/MariaDB (XAMPP atau Laragon). Node.js tidak diperlukan karena Bootstrap, jQuery, dan font dimuat dari CDN (butuh koneksi internet).
+**Kebutuhan:** PHP ≥ 8.2 (ekstensi `pdo_mysql`, `mbstring`, `openssl`, `fileinfo`), Composer, MySQL/MariaDB (XAMPP atau Laragon). Node.js tidak diperlukan (tidak ada `package.json`) karena Bootstrap, jQuery, dan font dimuat dari CDN (butuh koneksi internet).
 
 ```bash
 # 1. Ambil kode
@@ -572,6 +572,8 @@ Di Windows dengan XAMPP, bila `php` tidak dikenali, panggil lewat path lengkap, 
 
 Zona waktu aplikasi diatur ke `Asia/Jakarta` di `config/app.php`.
 
+Untuk menaruh aplikasi di internet, lihat [DEPLOY-RAILWAY.md](DEPLOY-RAILWAY.md).
+
 ### Catatan HTTPS (hosting di belakang proxy)
 
 Layanan hosting seperti Railway mengakhiri HTTPS di proxy dan meneruskan request ke aplikasi lewat HTTP. Aplikasi sudah disiapkan untuk itu:
@@ -605,9 +607,11 @@ Dibuat otomatis oleh `DatabaseSeeder`, bersama 5 kategori, 6 lokasi, 9 laporan c
 
 Akun Andi dipakai sebagai pengklaim pada klaim contoh "Kunci Motor Honda". Ganti atau hapus akun demo bila aplikasi dipublikasikan.
 
+Seeder aman dijalankan ulang (dilewati bila data demo sudah ada). Di server, isi environment variable `SEED_PASSWORD` agar akun demo tidak memakai password `password`.
+
 ## 16. Pengujian
 
-Feature test ada di `tests/Feature/TemuKampusTest.php` (9 test, fungsionalitas) dan `tests/Feature/HttpsProxyTest.php` (5 test, HTTPS di belakang proxy). Test memakai SQLite in-memory (lihat `phpunit.xml`), jadi tidak menyentuh database MySQL dan membutuhkan ekstensi `pdo_sqlite`.
+Feature test ada di `tests/Feature/TemuKampusTest.php` (9 test, fungsionalitas), `tests/Feature/HttpsProxyTest.php` (5 test, HTTPS di belakang proxy), dan `tests/Feature/SeederTest.php` (3 test, seeder). Test memakai SQLite in-memory (lihat `phpunit.xml`), jadi tidak menyentuh database MySQL dan membutuhkan ekstensi `pdo_sqlite`.
 
 ```bash
 php artisan test
@@ -623,6 +627,7 @@ Yang diuji:
 - CRUD admin (kategori, lokasi, user) dan perlindungan data yang masih dipakai
 - Bentuk JSON `/api/statistik`
 - HTTPS: URL halaman, redirect login, dan URL foto berskema `https://` di belakang proxy; mode production memaksa HTTPS; mode lokal tidak
+- Seeder: aman dijalankan dua kali dan password akun demo bisa diatur lewat `SEED_PASSWORD`
 
 ## 17. Pembagian Tugas
 
