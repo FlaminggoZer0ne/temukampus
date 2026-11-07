@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 
 class Laporan extends Model
 {
@@ -29,7 +28,8 @@ class Laporan extends Model
 
     public function getFotoUrlAttribute(): ?string
     {
-        return $this->foto ? Storage::url($this->foto) : null;
+        // asset() mengikuti skema/host request (https di belakang proxy), tidak bergantung APP_URL.
+        return $this->foto ? asset('storage/'.$this->foto) : null;
     }
 
     /** Dipakai live search JSON: tanggal sudah diformat untuk tampilan. */

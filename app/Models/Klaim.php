@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 
 class Klaim extends Model
 {
@@ -24,6 +23,6 @@ class Klaim extends Model
 
     public function getFotoBuktiUrlAttribute(): ?string
     {
-        return $this->foto_bukti ? Storage::url($this->foto_bukti) : null;
+        return $this->foto_bukti ? asset('storage/'.$this->foto_bukti) : null;
     }
 }

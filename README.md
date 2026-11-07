@@ -572,6 +572,26 @@ Di Windows dengan XAMPP, bila `php` tidak dikenali, panggil lewat path lengkap, 
 
 Zona waktu aplikasi diatur ke `Asia/Jakarta` di `config/app.php`.
 
+### Catatan HTTPS (hosting di belakang proxy)
+
+Layanan hosting seperti Railway mengakhiri HTTPS di proxy dan meneruskan request ke aplikasi lewat HTTP. Aplikasi sudah disiapkan untuk itu:
+
+- `bootstrap/app.php` mempercayai header `X-Forwarded-*` (`trustProxies(at: '*')`), sehingga Laravel tahu request aslinya HTTPS.
+- Saat `APP_ENV=production`, semua URL (`asset()`, `route()`, redirect) dipaksa `https://` (`AppServiceProvider`), jadi CSS, JS, dan ikon tidak diblokir browser sebagai mixed content.
+- Cookie sesi otomatis diberi flag `Secure` di production (`config/session.php`). Di lokal (`APP_ENV=local`) flag ini mati supaya login lewat `http://` tetap jalan.
+- URL foto upload dibentuk dari host request (`asset('storage/...')`), bukan dari `APP_URL`, jadi tetap benar walau `APP_URL` belum diisi.
+
+Environment variable minimal di production:
+
+```env
+APP_ENV=production
+APP_DEBUG=false
+APP_KEY=...            # php artisan key:generate --show
+APP_URL=https://domain-anda
+```
+
+Perilaku ini dicakup `tests/Feature/HttpsProxyTest.php`.
+
 ## 15. Akun Demo
 
 Dibuat otomatis oleh `DatabaseSeeder`, bersama 5 kategori, 6 lokasi, 9 laporan contoh, dan 1 klaim menunggu.
@@ -587,7 +607,7 @@ Akun Andi dipakai sebagai pengklaim pada klaim contoh "Kunci Motor Honda". Ganti
 
 ## 16. Pengujian
 
-Feature test ada di `tests/Feature/TemuKampusTest.php` (9 test). Test memakai SQLite in-memory (lihat `phpunit.xml`), jadi tidak menyentuh database MySQL dan membutuhkan ekstensi `pdo_sqlite`.
+Feature test ada di `tests/Feature/TemuKampusTest.php` (9 test, fungsionalitas) dan `tests/Feature/HttpsProxyTest.php` (5 test, HTTPS di belakang proxy). Test memakai SQLite in-memory (lihat `phpunit.xml`), jadi tidak menyentuh database MySQL dan membutuhkan ekstensi `pdo_sqlite`.
 
 ```bash
 php artisan test
@@ -602,6 +622,7 @@ Yang diuji:
 - Aturan edit dan hapus laporan, laporan petugas langsung `aktif`
 - CRUD admin (kategori, lokasi, user) dan perlindungan data yang masih dipakai
 - Bentuk JSON `/api/statistik`
+- HTTPS: URL halaman, redirect login, dan URL foto berskema `https://` di belakang proxy; mode production memaksa HTTPS; mode lokal tidak
 
 ## 17. Pembagian Tugas
 
