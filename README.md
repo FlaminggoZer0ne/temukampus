@@ -1,8 +1,8 @@
-# TemuKampus — Sistem Informasi Lost & Found Kampus
+# TemuIn — Sistem Informasi Lost & Found Kampus
 
 Aplikasi web untuk melaporkan, mencari, dan mengklaim barang hilang atau barang temuan di lingkungan kampus. Dibuat untuk tugas besar **Praktikum Pemrograman Web**.
 
-Tampilan mengikuti desain Figma [TemuKampus — Lost & Found Kampus](https://www.figma.com/design/OVJGxIibCvszqCa92kOauY/TemuKampus-%E2%80%94-Lost---Found-Kampus).
+Tampilan mengikuti desain Figma [TemuIn — Lost & Found Kampus](https://www.figma.com/design/OVJGxIibCvszqCa92kOauY/TemuIn-%E2%80%94-Lost---Found-Kampus).
 
 ---
 
@@ -176,7 +176,7 @@ flowchart LR
     P([Petugas Keamanan])
     A([Administrator])
 
-    subgraph Sistem TemuKampus
+    subgraph Sistem TemuIn
         UC1((Buat Laporan))
         UC2((Cari Barang))
         UC3((Ajukan Klaim))
@@ -348,7 +348,7 @@ Kolom kunci (`user_id`, `kategori_id`, `lokasi_id`, dst.) di-cast ke `integer` s
 ## 9. Struktur Folder
 
 ```
-temukampus-app/
+temuin-app/
 ├── app/
 │   ├── Http/
 │   │   ├── Controllers/

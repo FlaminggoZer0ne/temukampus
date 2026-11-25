@@ -1,4 +1,4 @@
-# Deploy TemuKampus ke Railway
+# Deploy TemuIn ke Railway
 
 Panduan dari repo GitHub sampai aplikasi bisa dibuka lewat link `https://...up.railway.app`. Docker tidak diperlukan.
 
@@ -36,7 +36,7 @@ Repo: `https://github.com/FlaminggoZer0ne/temukampus` (branch `main`). Setiap `g
 Buka service aplikasi → tab **Variables** → **Raw Editor**, tempel (ganti nilai yang bertanda `<...>`):
 
 ```env
-APP_NAME=TemuKampus
+APP_NAME=TemuIn
 APP_ENV=production
 APP_DEBUG=false
 APP_KEY=<hasil perintah di bawah>
@@ -60,7 +60,7 @@ SEED_PASSWORD=<password untuk semua akun demo, jangan "password">
 Membuat `APP_KEY` di komputer Anda:
 
 ```powershell
-cd "D:\KULIAHDATA\semester 5\Pemrograman WEB\temukampus-app"
+cd "D:\KULIAHDATA\semester 5\Pemrograman WEB\temuin-app"
 C:\xampp\php\php.exe artisan key:generate --show
 ```
 

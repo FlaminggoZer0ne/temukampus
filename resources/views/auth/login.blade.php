@@ -30,7 +30,7 @@
             <input class="form-check-input mt-0" type="checkbox" id="remember" name="remember" value="1" @checked(old('email') === null ? true : old('remember'))>
             Ingat saya
         </label>
-        <a href="mailto:admin@temukampus.test?subject=Reset%20password%20TemuKampus">Lupa password?</a>
+        <a href="mailto:admin@temukampus.test?subject=Reset%20password%20TemuIn">Lupa password?</a>
     </div>
 
     <button type="submit" class="tk-btn tk-btn-primary tk-btn-block">Masuk</button>

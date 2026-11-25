@@ -1,5 +1,5 @@
 /* =====================================================================
-   TemuKampus — app.js (jQuery)
+   TemuIn — app.js (jQuery)
    - Sidebar mobile, konfirmasi hapus, preview foto
    - Live search barang (AJAX/JSON)
    - Verifikasi laporan / klaim & serah-terima tanpa reload (AJAX PATCH)
